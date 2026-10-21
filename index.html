@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Presença</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="brand">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7 3.75h8.5L19 7.3v12.95H7a2 2 0 0 1-2-2V5.75a2 2 0 0 1 2-2Z" fill="currentColor" />
+                <path d="M15 3.75v4h4M9 12h6M9 15.5h6" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="m3 11 1.2 1.2L6.7 9.7" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span>Controle de presença</span>
+          </div>
+          <nav id="homeNav" class="home-nav" aria-label="Acesso por perfil">
+            <button type="button" id="teacherNavBtn">Sou professor</button>
+            <button type="button" id="studentNavBtn">Sou aluno</button>
+          </nav>
+          <div id="userBadge" class="badge" hidden>Acesso não iniciado</div>
+        </div>
+      </header>
+
+      <section id="accessScreen" class="screen">
+        <div class="welcome-copy">
+          <p class="label">Bem-vindo à sua escola</p>
+          <h1>A chamada de cada aula, na<br class="desktop-break" /> data certa.</h1>
+          <p>Professores registram a presença por aula. Alunos acompanham as faltas de cada matéria e sabem quantas ainda podem ter.</p>
+        </div>
+
+        <div class="access-grid">
+          <article class="panel option-card">
+            <span class="profile-icon teacher-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="m2.5 9 9.5-5 9.5 5-9.5 5-9.5-5Z" fill="currentColor" />
+                <path d="M6.5 11.2v5.1c3.2 2.6 7.8 2.6 11 0v-5.1L12 14.1l-5.5-2.9Z" fill="currentColor" opacity=".72" />
+                <path d="M21.5 9v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </span>
+            <p class="card-kicker">Área docente</p>
+            <h2>Professor</h2>
+            <p>Escolha a aula, faça a chamada em poucos toques e acompanhe a presença da turma.</p>
+            <div class="card-actions">
+              <button id="teacherAccessBtn" class="primary-button">Entrar como professor</button>
+              <button id="teacherRegisterHomeBtn" class="soft-button">Criar cadastro</button>
+            </div>
+          </article>
+
+          <article class="panel option-card">
+            <span class="profile-icon student-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="4" width="8" height="16" rx="2" fill="currentColor" />
+                <rect x="13" y="4" width="8" height="16" rx="2" fill="#4f46e5" />
+                <path d="M5.5 8h3M5.5 11h3M15.5 8h3M15.5 11h3" stroke="#fff" stroke-width="1.3" stroke-linecap="round" />
+              </svg>
+            </span>
+            <p class="card-kicker">Área do estudante</p>
+            <h2>Aluno</h2>
+            <p>Veja sua frequência por matéria, as datas das faltas e quantas você ainda pode ter.</p>
+            <div class="card-actions">
+              <button id="studentAccessBtn" class="primary-button">Entrar como aluno</button>
+              <button id="studentRegisterHomeBtn" class="soft-button">Criar cadastro</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="home-features">
+          <article>
+            <h2>Chamada por aula</h2>
+            <p>Cada chamada fica salva com a data da aula, sem sobrescrever a anterior.</p>
+          </article>
+          <article>
+            <h2>Frequência por matéria</h2>
+            <p>Percentual real, com a marca dos 75% e as faltas que ainda restam.</p>
+          </article>
+          <article>
+            <h2>Assistente escolar</h2>
+            <p>Perguntas sobre faltas e frequência respondidas com os seus números.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="teacherChoiceScreen" class="screen hidden">
+        <div class="panel choice-panel">
+          <h2>Área do professor</h2>
+          <div class="choice-grid">
+            <button id="teacherRegisterChoiceBtn" class="primary-button">Cadastrar professor</button>
+            <button id="teacherLoginChoiceBtn" class="soft-button">Login professor</button>
+          </div>
+          <button type="button" id="backTeacherToAccess" class="text-button">Voltar ao início</button>
+        </div>
+      </section>
+
+      <section id="studentChoiceScreen" class="screen hidden">
+        <div class="panel choice-panel">
+          <h2>Área do aluno</h2>
+          <div class="choice-grid">
+            <button id="studentRegisterChoiceBtn" class="primary-button">Cadastrar aluno</button>
+            <button id="studentLoginChoiceBtn" class="soft-button">Login aluno</button>
+          </div>
+          <button type="button" id="backStudentToAccess" class="text-button">Voltar ao início</button>
+        </div>
+      </section>
+
+      <section id="teacherRegisterScreen" class="screen hidden">
+        <div class="panel form-panel">
+          <h2>Cadastro do professor</h2>
+          <form id="teacherRegisterForm">
+            <div class="form-grid">
+              <div>
+                <label for="teacherFullName">Nome completo</label>
+                <input id="teacherFullName" type="text" placeholder="Ex: Maria da Silva" required />
+              </div>
+
+              <div>
+                <label for="teacherCpf">CPF</label>
+                <input id="teacherCpf" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" required />
+              </div>
+
+              <div>
+                <label for="teacherSubject">Matéria</label>
+                <select id="teacherSubject" required>
+                  <option value="Matemática">Matemática</option>
+                  <option value="Ciências">Ciências</option>
+                  <option value="Português">Português</option>
+                  <option value="História">História</option>
+                  <option value="Educação Física">Educação Física</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="teacherPassword">Senha</label>
+                <input id="teacherPassword" type="password" placeholder="Crie sua senha" required />
+              </div>
+            </div>
+
+            <div class="button-row">
+              <button type="submit" class="primary-button">Cadastrar professor</button>
+              <button type="button" id="backTeacherFromRegister" class="soft-button">Voltar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="teacherLoginScreen" class="screen hidden">
+        <div class="panel form-panel">
+          <h2>Login do professor</h2>
+          <form id="teacherLoginForm">
+            <div class="form-grid">
+              <div>
+                <label for="loginTeacherCpf">CPF</label>
+                <input id="loginTeacherCpf" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="Digite seu CPF" required />
+              </div>
+
+              <div>
+                <label for="loginTeacherPassword">Senha</label>
+                <input id="loginTeacherPassword" type="password" placeholder="Digite sua senha" required />
+              </div>
+            </div>
+
+            <div class="button-row">
+              <button type="submit" class="primary-button">Entrar</button>
+              <button type="button" id="backTeacherFromLogin" class="soft-button">Voltar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="studentRegisterScreen" class="screen hidden">
+        <div class="panel form-panel">
+          <h2>Cadastro do aluno</h2>
+          <form id="studentRegisterForm">
+            <div class="form-grid">
+              <div>
+                <label for="studentFullName">Nome completo</label>
+                <input id="studentFullName" type="text" placeholder="Ex: Ana Souza" required />
+              </div>
+
+              <div>
+                <label for="studentRa">RA</label>
+                <input id="studentRa" type="text" placeholder="Ex: 1001" required />
+              </div>
+
+              <div>
+                <label for="studentPassword">Senha</label>
+                <input id="studentPassword" type="password" placeholder="Crie sua senha" required />
+              </div>
+            </div>
+
+            <div class="button-row">
+              <button type="submit" class="primary-button">Cadastrar aluno</button>
+              <button type="button" id="backStudentFromRegister" class="soft-button">Voltar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="studentLoginScreen" class="screen hidden">
+        <div class="panel form-panel">
+          <h2>Login do aluno</h2>
+          <form id="studentLoginForm">
+            <div class="form-grid">
+              <div>
+                <label for="loginStudentRa">RA</label>
+                <input id="loginStudentRa" type="text" placeholder="Digite seu RA" required />
+              </div>
+
+              <div>
+                <label for="loginStudentPassword">Senha</label>
+                <input id="loginStudentPassword" type="password" placeholder="Digite sua senha" required />
+              </div>
+            </div>
+
+            <div class="button-row">
+              <button type="submit" class="primary-button">Entrar</button>
+              <button type="button" id="backStudentFromLogin" class="soft-button">Voltar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="teacherDashboard" class="screen hidden">
+        <div class="panel">
+          <div class="section-header">
+            <h2 id="teacherTitle">Chamada da turma</h2>
+            <button id="teacherLogoutBtn" class="soft-button">Sair</button>
+          </div>
+
+          <div class="summary-box">
+            <span>Presente</span>
+            <strong id="presentCount">0</strong>
+            <span>Faltou</span>
+            <strong id="absentCount">0</strong>
+            <span>Presença</span>
+            <strong id="attendancePercent">0%</strong>
+          </div>
+
+          <div class="attendance-tools">
+            <label for="teacherSubjectFilter">Matéria</label>
+            <select id="teacherSubjectFilter">
+              <option value="Matemática">Matemática</option>
+              <option value="Ciências">Ciências</option>
+              <option value="Português">Português</option>
+              <option value="História">História</option>
+              <option value="Educação Física">Educação Física</option>
+            </select>
+          </div>
+
+          <div id="teacherScheduleList" class="schedule-list"></div>
+        </div>
+
+        <div class="panel">
+          <div class="section-header">
+            <h2>Registrar presença</h2>
+            <button id="resetBtn" class="soft-button">Limpar chamada de hoje</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Aluno</th>
+                  <th>Status</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody id="studentList"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="studentDashboard" class="screen hidden">
+        <div class="student-dashboard-grid">
+          <section class="panel student-attendance-panel">
+            <div class="section-header student-dashboard-header">
+              <div>
+                <h2>Minha frequência</h2>
+                <p class="student-summary">
+                  <span id="studentNameDisplay">-</span> · RA <span id="studentRaDisplay">-</span>
+                  · consulta em <span id="studentUpdatedDate">-</span>
+                </p>
+              </div>
+              <button id="studentLogoutBtn" class="soft-button">Sair</button>
+            </div>
+
+            <div class="student-metrics">
+              <article class="student-metric student-metric-primary">
+                <span>Frequência geral</span>
+                <strong id="studentAttendancePercent">0%</strong>
+                <small>Mínimo exigido: 75%</small>
+              </article>
+              <article class="student-metric">
+                <span>Aulas assistidas</span>
+                <strong id="studentPresentCount">0</strong>
+                <small id="studentLessonsCount">de 0 aulas dadas</small>
+              </article>
+              <article class="student-metric">
+                <span>Faltas</span>
+                <strong id="studentAbsentCount">0</strong>
+                <small>em todas as matérias</small>
+              </article>
+            </div>
+
+            <div id="studentAttendanceAlert" class="student-attendance-alert" role="status">
+              Ainda não há chamadas registradas para esta conta.
+            </div>
+
+            <div class="student-subject-heading">
+              <h3>Por matéria</h3>
+            </div>
+            <div class="table-wrap student-table-wrap">
+              <table class="student-attendance-table">
+                <thead>
+                  <tr>
+                    <th>Matéria</th>
+                    <th>Aulas dadas</th>
+                    <th>Faltas</th>
+                    <th>Frequência</th>
+                    <th>Faltas restantes</th>
+                    <th>Situação</th>
+                  </tr>
+                </thead>
+                <tbody id="studentRecordsTable"></tbody>
+              </table>
+            </div>
+            <p class="student-table-note">A linha de referência indica 75% de frequência mínima. Registros antigos sem data não entram nos totais.</p>
+          </section>
+
+          <div class="student-dashboard-secondary">
+            <section class="panel student-recent-panel">
+              <h3>Faltas recentes</h3>
+              <ul id="studentRecentAbsences" class="student-recent-list"></ul>
+            </section>
+
+            <section class="panel student-assistant-panel">
+              <div>
+                <p class="label">Assistente escolar</p>
+                <h3 id="attendanceAssistantTitle">Pergunte sobre sua frequência</h3>
+              </div>
+              <div id="assistantConversation" class="assistant-conversation" aria-live="polite" aria-relevant="additions">
+                <p class="assistant-message">Olá! Posso consultar suas presenças, faltas e frequência mínima.</p>
+              </div>
+              <form id="attendanceAssistantForm" class="assistant-form">
+                <label class="visually-hidden" for="attendanceAssistantQuestion">Sua pergunta sobre frequência</label>
+                <input id="attendanceAssistantQuestion" type="text" placeholder="Escreva sua pergunta..." autocomplete="off" required />
+                <button type="submit" class="primary-button">Perguntar</button>
+              </form>
+              <p class="assistant-disclaimer">Cálculo pela regra geral de 75% de frequência. A regra da sua escola pode ser diferente.</p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="site-footer">
+      <div>
+        <span>Controle de presença escolar</span>
+        <span>Protótipo com dados de exemplo</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

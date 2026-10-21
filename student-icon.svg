@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <defs>
+    <style>
+      .geo-primary { fill: #4f46e5; }
+      .geo-secondary { fill: #ff6b6b; }
+      .geo-tertiary { fill: #ffd700; }
+      .geo-accent { fill: #16a34a; }
+      .geo-stroke { stroke: #1f2937; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Background circles (subtle) -->
+  <circle cx="60" cy="80" r="15" class="geo-primary" opacity="0.2"/>
+  <circle cx="140" cy="100" r="18" class="geo-secondary" opacity="0.2"/>
+  
+  <!-- Left vertical stack (books) -->
+  <rect x="30" y="50" width="40" height="55" rx="4" class="geo-primary" opacity="0.9"/>
+  <rect x="35" y="60" width="30" height="4" fill="white" opacity="0.6"/>
+  <rect x="35" y="70" width="30" height="4" fill="white" opacity="0.6"/>
+  <rect x="35" y="80" width="30" height="4" fill="white" opacity="0.6"/>
+  <rect x="35" y="90" width="30" height="4" fill="white" opacity="0.6"/>
+  
+  <!-- Center diamond (learning) -->
+  <polygon points="100,40 130,70 100,100 70,70" class="geo-secondary" opacity="0.85"/>
+  <polygon points="100,50 120,70 100,90 80,70" fill="white" opacity="0.5"/>
+  
+  <!-- Right vertical stack (books) -->
+  <rect x="130" y="60" width="40" height="50" rx="4" class="geo-accent" opacity="0.9"/>
+  <rect x="135" y="70" width="30" height="4" fill="white" opacity="0.6"/>
+  <rect x="135" y="80" width="30" height="4" fill="white" opacity="0.6"/>
+  <rect x="135" y="90" width="30" height="4" fill="white" opacity="0.6"/>
+  
+  <!-- Top triangle (progress/growth) -->
+  <polygon points="100,20 85,50 115,50" class="geo-tertiary" opacity="0.8"/>
+  
+  <!-- Bottom horizontal bar (stability/foundation) -->
+  <rect x="40" y="130" width="120" height="12" rx="3" class="geo-primary" opacity="0.8"/>
+  
+  <!-- Connecting lines (flow of knowledge) -->
+  <line x1="50" y1="110" x2="50" y2="130" class="geo-stroke" stroke="rgba(79, 70, 229, 0.5)"/>
+  <line x1="100" y1="105" x2="100" y2="130" class="geo-stroke" stroke="rgba(255, 107, 107, 0.5)"/>
+  <line x1="150" y1="115" x2="150" y2="130" class="geo-stroke" stroke="rgba(22, 163, 74, 0.5)"/>
+  
+  <!-- Decorative circles at bottom -->
+  <circle cx="70" cy="175" r="12" class="geo-secondary" opacity="0.7"/>
+  <circle cx="100" cy="185" r="14" class="geo-accent" opacity="0.7"/>
+  <circle cx="130" cy="170" r="11" class="geo-tertiary" opacity="0.7"/>
+  
+  <!-- Inner circles (nested/learning layers) -->
+  <circle cx="70" cy="175" r="7" fill="white" opacity="0.6"/>
+  <circle cx="100" cy="185" r="8" fill="white" opacity="0.6"/>
+  <circle cx="130" cy="170" r="6" fill="white" opacity="0.6"/>
+  
+  <!-- Top accent line -->
+  <line x1="50" y1="35" x2="150" y2="35" stroke="#4f46e5" stroke-width="3" opacity="0.6" stroke-linecap="round"/>
+</svg>
