@@ -780,15 +780,20 @@ function resetAssistantConversation() {
   appendAssistantMessage('Olá! Posso consultar suas presenças, faltas e frequência mínima.', 'assistant-message');
 }
 
-function handleAttendanceAssistantQuestion(event) {
-  event.preventDefault();
-  const question = attendanceAssistantQuestion.value.trim();
-  if (!question) return;
+async function handleAttendanceAssistantQuestion(event) {
+    event.preventDefault();
+    const question = attendanceAssistantQuestion.value.trim();
+    if (!question) return;
 
-  appendAssistantMessage(question, 'user-message');
-  appendAssistantMessage(answerAttendanceQuestion(question), 'assistant-message');
-  attendanceAssistantForm.reset();
-  attendanceAssistantQuestion.focus();
+    appendAssistantMessage(question, 'user-message');
+    
+    // Aguarda a resposta da IA de forma assíncrona
+    const resposta = await answerAttendanceQuestion(question);
+    appendAssistantMessage(resposta, 'assistant-message');
+    
+    attendanceAssistantForm.reset();
+    attendanceAssistantQuestion.focus();
+}
 }
 
 async function handleTeacherRegister(event) {
