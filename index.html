@@ -374,5 +374,42 @@
     </footer>
 
     <script src="script.js"></script>
+    <section id="adminDashboard" class="screen hidden">
+  <div class="panel">
+    <div class="section-header">
+      <h2>Painel do Administrador</h2>
+      <button id="adminLogoutBtn" class="soft-button">Sair</button>
+    </div>
+
+    <h3>Professores cadastrados</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Matéria</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody id="adminTeacherList"></tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top: 2rem;">Alunos cadastrados</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>RA</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody id="adminStudentList"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
   </body>
 </html>
