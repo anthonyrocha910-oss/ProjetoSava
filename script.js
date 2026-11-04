@@ -927,14 +927,18 @@ async function resetAttendance() {
 }
 
 async function handleTeacherStudentAction(event) {
-  const button = event.target.closest('button[data-ra]');
+  const button = event.target.closest('button');
   if (!button) return;
 
-  const studentRa = button.dataset.ra;
-  const status = button.dataset.status;
+  // Tenta ir buscar o RA e o status de várias formas para garantir que nunca falha
+  const studentRa = button.dataset.ra || button.getAttribute('data-ra');
+  const status = button.dataset.status || button.getAttribute('data-status') || (button.classList.contains('present') ? 'presente' : 'falta');
+
+  if (!studentRa) return;
+
   const subject = currentUser && currentUser.role === 'teacher'
     ? currentUser.data.materia
-    : teacherSubjectFilter.value;
+    : (document.getElementById('teacherSubjectFilter') ? document.getElementById('teacherSubjectFilter').value : '');
 
   try {
     await apiRequest('/attendance', {
@@ -947,7 +951,6 @@ async function handleTeacherStudentAction(event) {
     alert(error.message);
   }
 }
-
 function logoutCurrentUser() {
   currentUser = null;
   setUserBadge('Acesso não iniciado');
