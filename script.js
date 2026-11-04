@@ -970,6 +970,15 @@ backStudentFromRegister.addEventListener('click', () => showScreen('studentChoic
 backStudentFromLogin.addEventListener('click', () => showScreen('studentChoiceScreen'));
 
 adminAccessBtn.addEventListener('click', async () => {
+  const senha = prompt('Digite a senha do administrador:');
+  
+  if (senha === null) return; // Se cancelar, não faz nada
+  
+  if (senha !== '1234') {
+    alert('Senha incorreta!');
+    return;
+  }
+
   currentUser = { role: 'admin' };
   setUserBadge('Administrador do Sistema');
   showScreen('adminDashboard');
