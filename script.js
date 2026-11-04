@@ -1005,11 +1005,6 @@ adminLogoutBtn.addEventListener('click', () => {
   showScreen('accessScreen');
 });
 
-teacherRegisterForm.addEventListener('submit', handleTeacherRegister);
-teacherLoginForm.addEventListener('submit', handleTeacherLogin);
-studentRegisterForm.addEventListener('submit', handleStudentRegister);
-studentLoginForm.addEventListener('submit', handleStudentLogin);
-
 studentList.addEventListener('click', handleTeacherStudentAction);
 resetBtn.addEventListener('click', resetAttendance);
 teacherSubjectFilter.addEventListener('change', async () => {
@@ -1028,11 +1023,6 @@ teacherSubjectFilter.addEventListener('change', async () => {
 document.getElementById('teacherLogoutBtn').addEventListener('click', logoutCurrentUser);
 document.getElementById('studentLogoutBtn').addEventListener('click', logoutCurrentUser);
 attendanceAssistantForm.addEventListener('submit', handleAttendanceAssistantQuestion);
-
-const teacherAttendanceContainer = document.getElementById('teacherAttendanceTable') || document.querySelector('.table-wrap');
-if (teacherAttendanceContainer) {
-  teacherAttendanceContainer.addEventListener('click', handleTeacherStudentAction);
-}
 
 showScreen('accessScreen');
 renderTeacherSchedule();
