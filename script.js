@@ -794,7 +794,7 @@ async function handleAttendanceAssistantQuestion(event) {
     attendanceAssistantForm.reset();
     attendanceAssistantQuestion.focus();
 }
-}
+
 
 async function handleTeacherRegister(event) {
   event.preventDefault();
