@@ -758,7 +758,7 @@ function answerAttendanceQuestion(question) {
     return `Sua frequência geral é de ${formatPercentage(summary.percentage)}%: ${summary.present} presença(s) em ${summary.total} aula(s) registrada(s).`;
   }
 
-  return 'Posso consultar suas faltas, frequência geral ou situação por matéria. Por exemplo: “Quantas faltas ainda posso ter em Matemática?”';
+  return 'Sou uma IA para te ajudar com o seu controle de faltas apenas”';
 }
 
 function appendAssistantMessage(message, className) {
