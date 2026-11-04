@@ -1020,6 +1020,11 @@ document.getElementById('teacherLogoutBtn').addEventListener('click', logoutCurr
 document.getElementById('studentLogoutBtn').addEventListener('click', logoutCurrentUser);
 attendanceAssistantForm.addEventListener('submit', handleAttendanceAssistantQuestion);
 
+const teacherAttendanceContainer = document.getElementById('teacherAttendanceTable') || document.querySelector('.table-wrap');
+if (teacherAttendanceContainer) {
+  teacherAttendanceContainer.addEventListener('click', handleTeacherStudentAction);
+}
+
 showScreen('accessScreen');
 renderTeacherSchedule();
 
