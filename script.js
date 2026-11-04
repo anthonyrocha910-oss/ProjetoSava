@@ -930,35 +930,10 @@ async function handleTeacherStudentAction(event) {
   const button = event.target.closest('button');
   if (!button) return;
 
-  const row = button.closest('tr');
-  if (!row) return;
+  const studentRa = button.dataset.ra;
+  const status = button.dataset.status;
 
-  // Lê diretamente o status guardado no botão ('present' ou 'absent')
-  let status = button.dataset.status;
-  
-  // Fallback caso venha pelo texto do botão
-  if (!status) {
-    const text = button.textContent.trim().toLowerCase();
-    status = text.includes('presente') ? 'present' : 'absent';
-  }
-
-  // Tenta encontrar o RA guardado no botão ou na linha
-  let studentRa = button.dataset.ra || row.dataset.ra;
-
-  // Se não encontrar pelo dataset, tenta procurar pelo nome do aluno na tabela
-  if (!studentRa) {
-    const studentName = row.cells[0]?.textContent.trim();
-    try {
-      const studentsFromStorage = await apiRequest('/students');
-      const alunoEncontrado = studentsFromStorage.find(s => s.nomeCompleto === studentName);
-      if (alunoEncontrado) studentRa = alunoEncontrado.ra;
-    } catch (e) {
-      // Ignora erro temporário de rede
-    }
-  }
-
-  if (!studentRa) {
-    alert("Erro: RA do aluno não identificado nesta linha.");
+  if (!studentRa || !status) {
     return;
   }
 
