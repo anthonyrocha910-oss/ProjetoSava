@@ -59,6 +59,12 @@ const teacherNavBtn = document.getElementById('teacherNavBtn');
 const studentNavBtn = document.getElementById('studentNavBtn');
 const homeNav = document.getElementById('homeNav');
 
+const adminAccessBtn = document.getElementById('adminAccessBtn');
+const adminDashboard = document.getElementById('adminDashboard');
+const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+const adminTeacherList = document.getElementById('adminTeacherList');
+const adminStudentList = document.getElementById('adminStudentList');
+
 const teacherRegisterChoiceBtn = document.getElementById('teacherRegisterChoiceBtn');
 const teacherLoginChoiceBtn = document.getElementById('teacherLoginChoiceBtn');
 const studentRegisterChoiceBtn = document.getElementById('studentRegisterChoiceBtn');
@@ -963,6 +969,15 @@ backTeacherFromLogin.addEventListener('click', () => showScreen('teacherChoiceSc
 backStudentFromRegister.addEventListener('click', () => showScreen('studentChoiceScreen'));
 backStudentFromLogin.addEventListener('click', () => showScreen('studentChoiceScreen'));
 
+adminAccessBtn.addEventListener('click', async () => {
+  currentUser = { role: 'admin' };
+  setUserBadge('Administrador do Sistema');
+  showScreen('adminDashboard');
+  await renderAdminDashboard();
+});
+
+adminLogoutBtn.addEventListener('click', logoutCurrentUser);
+
 teacherRegisterForm.addEventListener('submit', handleTeacherRegister);
 teacherLoginForm.addEventListener('submit', handleTeacherLogin);
 studentRegisterForm.addEventListener('submit', handleStudentRegister);
@@ -989,3 +1004,66 @@ attendanceAssistantForm.addEventListener('submit', handleAttendanceAssistantQues
 
 showScreen('accessScreen');
 renderTeacherSchedule();
+
+async function renderAdminDashboard() {
+  try {
+    const database = await loadBrowserDatabase();
+
+    // Renderiza professores
+    const teacherRows = database.teachers.map((teacher) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${teacher.nomeCompleto}</td>
+        <td>${teacher.cpf}</td>
+        <td>${teacher.materia}</td>
+        <td><button class="status-button absent" style="background-color: #dc3545; color: #fff;" onclick="deleteTeacher('${teacher.cpf}')">Excluir</button></td>
+      `;
+      return row;
+    });
+    adminTeacherList.replaceChildren(...teacherRows.length ? teacherRows : [createEmptyRow(4, 'Nenhum professor cadastrado.')]);
+
+    // Renderiza alunos
+    const studentRows = database.students.map((student) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${student.nomeCompleto}</td>
+        <td>${student.ra}</td>
+        <td><button class="status-button absent" style="background-color: #dc3545; color: #fff;" onclick="deleteStudent('${student.ra}')">Excluir</button></td>
+      `;
+      return row;
+    });
+    adminStudentList.replaceChildren(...studentRows.length ? studentRows : [createEmptyRow(3, 'Nenhum aluno cadastrado.')]);
+
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+function createEmptyRow(colSpan, message) {
+  const row = document.createElement('tr');
+  const cell = document.createElement('td');
+  cell.colSpan = colSpan;
+  cell.textContent = message;
+  row.append(cell);
+  return row;
+}
+
+async function deleteStudent(ra) {
+  if (window.confirm(`Deseja realmente excluir o aluno com RA ${ra}?`)) {
+    const database = await loadBrowserDatabase();
+    database.students = database.students.filter((s) => String(s.ra) !== String(ra));
+    saveBrowserDatabase(database);
+    await renderAdminDashboard();
+  }
+}
+
+async function deleteTeacher(cpf) {
+  if (window.confirm(`Deseja realmente excluir este professor?`)) {
+    const database = await loadBrowserDatabase();
+    database.teachers = database.teachers.filter((t) => normalizeCpf(t.cpf) !== normalizeCpf(cpf));
+    saveBrowserDatabase(database);
+    await renderAdminDashboard();
+  }
+}
+window.deleteStudent = deleteStudent;
+window.deleteTeacher = deleteTeacher;
