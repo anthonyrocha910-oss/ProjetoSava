@@ -933,25 +933,28 @@ async function handleTeacherStudentAction(event) {
   const row = button.closest('tr');
   if (!row) return;
 
-  // Descobre se é presença ou falta pelo texto do botão
-  const text = button.textContent.trim().toLowerCase();
-  const status = (text.includes('presente')) ? 'presente' : 'falta';
-
-  // Vai buscar o nome do aluno na primeira coluna da linha
-  const studentName = row.cells[0]?.textContent.trim();
+  // Lê diretamente o status guardado no botão ('present' ou 'absent')
+  let status = button.dataset.status;
+  
+  // Fallback caso venha pelo texto do botão
+  if (!status) {
+    const text = button.textContent.trim().toLowerCase();
+    status = text.includes('presente') ? 'present' : 'absent';
+  }
 
   // Tenta encontrar o RA guardado no botão ou na linha
   let studentRa = button.dataset.ra || row.dataset.ra;
 
-  // Se não encontrar, tenta procurar na lista global de alunos se existir
-  if (!studentRa && window.currentStudentsList) {
-    const alunoEncontrado = window.currentStudentsList.find(s => s.nomeCompleto === studentName);
-    if (alunoEncontrado) studentRa = alunoEncontrado.ra;
-  }
-
-  // Fallback de segurança caso o RA venha no próprio texto da linha ou atributo
+  // Se não encontrar pelo dataset, tenta procurar pelo nome do aluno na tabela
   if (!studentRa) {
-    studentRa = button.getAttribute('data-ra');
+    const studentName = row.cells[0]?.textContent.trim();
+    try {
+      const studentsFromStorage = await apiRequest('/students');
+      const alunoEncontrado = studentsFromStorage.find(s => s.nomeCompleto === studentName);
+      if (alunoEncontrado) studentRa = alunoEncontrado.ra;
+    } catch (e) {
+      // Ignora erro temporário de rede
+    }
   }
 
   if (!studentRa) {
