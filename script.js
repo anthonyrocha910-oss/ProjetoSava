@@ -1008,6 +1008,14 @@ renderTeacherSchedule();
 async function renderAdminDashboard() {
   try {
     const database = await loadBrowserDatabase();
+    
+    // Procura os elementos diretamente para evitar erros de valor nulo
+    const adminTeacherList = document.getElementById('adminTeacherList');
+    const adminStudentList = document.getElementById('adminStudentList');
+
+    if (!adminTeacherList || !adminStudentList) {
+      return;
+    }
 
     // Renderiza professores
     const teacherRows = database.teachers.map((teacher) => {
