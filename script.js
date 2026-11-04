@@ -969,6 +969,11 @@ backTeacherFromLogin.addEventListener('click', () => showScreen('teacherChoiceSc
 backStudentFromRegister.addEventListener('click', () => showScreen('studentChoiceScreen'));
 backStudentFromLogin.addEventListener('click', () => showScreen('studentChoiceScreen'));
 
+teacherLoginForm.addEventListener('submit', handleTeacherLogin);
+teacherRegisterForm.addEventListener('submit', handleTeacherRegister);
+studentLoginForm.addEventListener('submit', handleStudentLogin);
+studentRegisterForm.addEventListener('submit', handleStudentRegister);
+
 adminAccessBtn.addEventListener('click', async () => {
   const senha = prompt('Digite a senha do administrador:');
   
