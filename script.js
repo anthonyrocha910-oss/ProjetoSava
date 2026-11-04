@@ -985,7 +985,11 @@ adminAccessBtn.addEventListener('click', async () => {
   await renderAdminDashboard();
 });
 
-adminLogoutBtn.addEventListener('click', logoutCurrentUser);
+adminLogoutBtn.addEventListener('click', () => {
+  currentUser = null;
+  setUserBadge('');
+  showScreen('accessScreen');
+});
 
 teacherRegisterForm.addEventListener('submit', handleTeacherRegister);
 teacherLoginForm.addEventListener('submit', handleTeacherLogin);
