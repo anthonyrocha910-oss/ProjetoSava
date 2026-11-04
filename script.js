@@ -930,11 +930,34 @@ async function handleTeacherStudentAction(event) {
   const button = event.target.closest('button');
   if (!button) return;
 
-  // Tenta ir buscar o RA e o status de várias formas para garantir que nunca falha
-  const studentRa = button.dataset.ra || button.getAttribute('data-ra');
-  const status = button.dataset.status || button.getAttribute('data-status') || (button.classList.contains('present') ? 'presente' : 'falta');
+  const row = button.closest('tr');
+  if (!row) return;
 
-  if (!studentRa) return;
+  // Descobre se é presença ou falta pelo texto do botão
+  const text = button.textContent.trim().toLowerCase();
+  const status = (text.includes('presente')) ? 'presente' : 'falta';
+
+  // Vai buscar o nome do aluno na primeira coluna da linha
+  const studentName = row.cells[0]?.textContent.trim();
+
+  // Tenta encontrar o RA guardado no botão ou na linha
+  let studentRa = button.dataset.ra || row.dataset.ra;
+
+  // Se não encontrar, tenta procurar na lista global de alunos se existir
+  if (!studentRa && window.currentStudentsList) {
+    const alunoEncontrado = window.currentStudentsList.find(s => s.nomeCompleto === studentName);
+    if (alunoEncontrado) studentRa = alunoEncontrado.ra;
+  }
+
+  // Fallback de segurança caso o RA venha no próprio texto da linha ou atributo
+  if (!studentRa) {
+    studentRa = button.getAttribute('data-ra');
+  }
+
+  if (!studentRa) {
+    alert("Erro: RA do aluno não identificado nesta linha.");
+    return;
+  }
 
   const subject = currentUser && currentUser.role === 'teacher'
     ? currentUser.data.materia
